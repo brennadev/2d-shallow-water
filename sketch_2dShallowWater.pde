@@ -48,6 +48,15 @@ void setup() {
     cells[50][50].height = 100;
     cells[60][60].height = 200;
     cells[80][80].height = 150;
+    cells[81][81].height = 145;
+    cells[80][81].height = 147;
+    cells[81][80].height = 148;
+    
+    for(int i = 100; i < 120; i++) {
+        for(int j = 140; j < 160; j++) {
+            cells[i][j].height = 80 + (i / 2) + (j / 2);
+        }
+    }
 }
 
 
@@ -61,7 +70,7 @@ void draw() {
             //println(j);
             //println();
             
-            cells[i][j].updateHalfStep(.002);
+            cells[i][j].updateHalfStep(.0002);
         }
     }
     
@@ -72,7 +81,7 @@ void draw() {
             //println(j);
             //println();
             
-            cells[i][j].updateFullStep(.002);
+            cells[i][j].updateFullStep(.0002);
         }
     }
     
