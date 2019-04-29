@@ -4,7 +4,7 @@ final float dx = 2;
 final float dy = 2;
 
 final int cellCount = 200;
-final float maxHeight = 100;
+final float maxHeight = 255;
 final float gravity = 3;
 
 WaterCell[][] cells = new WaterCell[cellCount][cellCount]; 
@@ -41,7 +41,7 @@ void setup() {
     
     for(int i = 0; i < cellCount; i++) {
         for(int j = 1; j < cellCount; j++) {
-            cells[i][j].nextCellVertical = cells[i][j - 1];
+            cells[i][j].previousCellVertical = cells[i][j - 1];
         }
     }
     
@@ -53,6 +53,29 @@ void setup() {
 
 void draw() {
     fill(0, 220, 255);
+    
+    //println("halfstep");
+    for(int i = 0; i < cellCount - 1; i++) {
+        for(int j = 0; j < cellCount - 1; j++) {
+            //println(i);
+            //println(j);
+            //println();
+            
+            cells[i][j].updateHalfStep(.002);
+        }
+    }
+    
+    //println("fullstep");
+    for(int i = 1; i < cellCount - 1; i++) {
+        for(int j = 1; j < cellCount - 1; j++) {
+            //println(i);
+            //println(j);
+            //println();
+            
+            cells[i][j].updateFullStep(.002);
+        }
+    }
+    
     for(int i = 0; i < cellCount; i++) {
         for(int j = 0; j < cellCount; j++) {
         //rect(i * (dx / 5), maxHeight - (cells[i][j].height * 5), (dx / 5), cells[i][j].height * 5);
