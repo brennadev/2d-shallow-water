@@ -38,9 +38,16 @@ class WaterCell {
         println(previousCellVertical.height);        // not null when j = 200
         println(nextCellHorizontal.height);            // not null when j = 200
         println(nextCellVertical.height);            // not null when j = 200*/
-        velocity += (previousCellHorizontal.height + previousCellVertical.height + nextCellHorizontal.height + nextCellVertical.height) / 4 - height;
+        velocity += ((previousCellHorizontal.height + previousCellVertical.height + nextCellHorizontal.height + nextCellVertical.height) / 4 - height) / 4;
         velocity *= .99;
         height += velocity;
+        
+        if (height > 10) {
+            height = 10;
+        }
+        if (height < 0) {
+            height = 0;
+        }
     }
     
     void updateHalfStep(float dt) {

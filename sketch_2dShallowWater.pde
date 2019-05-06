@@ -62,12 +62,18 @@ void setup() {
     cells[80][81].height = 0.8;
     cells[81][80].height = 0.6;*/
     
-    for(int i = 100; i < 115; i++) {
+    /*for(int i = 100; i < 115; i++) {
         for(int j = 140; j < 150; j++) {
             //cells[i][j].height = 80 + (i / 1.5) + (j / 1.5);
             cells[i][j].height = .6;
         }
-    }
+    }*/
+    cells[100][100].height = .55;
+    cells[50][150].height = .55;
+    cells[24][40].height = .55;
+    cells[15][10].height = .55;
+    cells[175][50].height = .55;
+    cells[25][125].height = .55;
 }
 
 
@@ -110,13 +116,21 @@ void draw() {
         }
     }
     
-    for(int i = 0; i < cellCount; i++) {
-        for(int j = 0; j < cellCount; j++) {
+    for(int i = 1; i < cellCount + 1; i++) {
+        for(int j = 1; j < cellCount + 1; j++) {
         //rect(i * (dx / 5), maxHeight - (cells[i][j].height * 5), (dx / 5), cells[i][j].height * 5);
             //translate(i * (200 / dx), 0, j * (200 / dy));
             //box(dx, cells[i][j].height, dy);
+            
+            /*if (cells[i][j].height > 2.55) {
+                println(cells[i][j].height);
+            }*/
+            
+            /*if (cells[i][j].height < 0) {
+                println(cells[i][j].height);
+            }*/
             fill(cells[i][j].height * 100);
-            rect(i * dx, j * dy, dx, dy);
+            rect((i - 1) * dx, (j - 1) * dy, dx, dy);
         }
     }
     
