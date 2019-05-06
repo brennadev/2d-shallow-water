@@ -2,6 +2,10 @@
 
 class WaterCell {
     float height;
+    float velocity;
+    int velocityXDirection;    // 1 if to the right, -1 if to the left, 0 if none
+    int velocityYDirection;    // 1 if to the bottom, -1 if to the top, 0 if none
+    
     PVector momentum;
     float midpointHeight;
     PVector midpointMomentum;
@@ -18,6 +22,25 @@ class WaterCell {
         // just so they're initialized to something - will get set properly on the first update call in the draw loop
         midpointHeight = 0;
         midpointMomentum = new PVector(0, 0);
+    }
+    
+    WaterCell(float height, float velocity) {
+        this.height = height;
+        this.velocity = velocity;
+        
+        // TODO: remove these eventually; it's just so they're initialized to something
+        midpointHeight = 0;
+        midpointMomentum = new PVector(0, 0);
+    }
+    
+    void update() {
+        /*println(previousCellHorizontal.height);    // null when j = 200
+        println(previousCellVertical.height);        // not null when j = 200
+        println(nextCellHorizontal.height);            // not null when j = 200
+        println(nextCellVertical.height);            // not null when j = 200*/
+        velocity += (previousCellHorizontal.height + previousCellVertical.height + nextCellHorizontal.height + nextCellVertical.height) / 4 - height;
+        velocity *= .99;
+        height += velocity;
     }
     
     void updateHalfStep(float dt) {

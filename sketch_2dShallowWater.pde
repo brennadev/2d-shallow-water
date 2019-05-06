@@ -7,7 +7,7 @@ final int cellCount = 200;
 final float maxHeight = 255;
 final float gravity = 3;
 
-WaterCell[][] cells = new WaterCell[cellCount][cellCount]; 
+WaterCell[][] cells = new WaterCell[cellCount + 2][cellCount + 2]; 
 
 color test = color(0);
 
@@ -16,33 +16,41 @@ void setup() {
     noStroke();
     
     // set up a default WaterCell for each cell
-    for(int i = 0; i < cellCount; i++) {
-        for(int j = 0; j < cellCount; j++) {
-            cells[i][j] = new WaterCell(0.5, new PVector(1, 1));
+    for(int i = 1; i < cellCount + 1; i++) {
+        for(int j = 1; j < cellCount + 1; j++) {
+            cells[i][j] = new WaterCell(0.5, 0);
         }
     }
     
+    // the edge cells that always stay 0 for height
+    for(int i = 0; i < cellCount + 1; i++) {
+        cells[i][0] = new WaterCell(0, 0);                // topmost row
+        cells[0][i] = new WaterCell(0, 0);                // leftmost column
+        cells[cellCount + 1][i] = new WaterCell(0, 0);    // bottommost row
+        cells[i][cellCount + 1] = new WaterCell(0, 0);    // rightmost column
+    }
+    
     // previous/next cells
-    for(int i = 0; i < cellCount - 1; i++) {
-        for(int j = 0; j < cellCount; j++) {
+    for(int i = 1; i < cellCount + 1; i++) {
+        for(int j = 1; j < cellCount + 1; j++) {
             cells[i][j].nextCellHorizontal = cells[i + 1][j];
         }
     }
     
-    for(int i = 1; i < cellCount; i++) {
-        for(int j = 0; j < cellCount; j++) {
+    for(int i = 1; i < cellCount + 1; i++) {
+        for(int j = 1; j < cellCount + 1; j++) {
             cells[i][j].previousCellHorizontal = cells[i - 1][j];
         }
     }
     
-    for(int i = 0; i < cellCount; i++) {
-        for(int j = 0; j < cellCount - 1; j++) {
+    for(int i = 1; i < cellCount + 1; i++) {
+        for(int j = 1; j < cellCount + 1; j++) {
             cells[i][j].nextCellVertical = cells[i][j + 1];
         }
     }
     
-    for(int i = 0; i < cellCount; i++) {
-        for(int j = 1; j < cellCount; j++) {
+    for(int i = 1; i < cellCount + 1; i++) {
+        for(int j = 1; j < cellCount + 1; j++) {
             cells[i][j].previousCellVertical = cells[i][j - 1];
         }
     }
@@ -54,8 +62,8 @@ void setup() {
     cells[80][81].height = 0.8;
     cells[81][80].height = 0.6;*/
     
-    for(int i = 100; i < 120; i++) {
-        for(int j = 140; j < 160; j++) {
+    for(int i = 100; i < 115; i++) {
+        for(int j = 140; j < 150; j++) {
             //cells[i][j].height = 80 + (i / 1.5) + (j / 1.5);
             cells[i][j].height = .6;
         }
@@ -66,7 +74,7 @@ void setup() {
 void draw() {
     fill(0, 220, 255);
     
-    for(int k = 0; k < 60; k++) {
+    /*for(int k = 0; k < 60; k++) {
     //println("halfstep");
     for(int i = 0; i < cellCount - 1; i++) {
         for(int j = 0; j < cellCount - 1; j++) {
@@ -76,10 +84,10 @@ void draw() {
             
             cells[i][j].updateHalfStep(.002);
         }
-    }
+    }*/
     
     //println("fullstep");
-    for(int i = 1; i < cellCount - 1; i++) {
+    /*for(int i = 1; i < cellCount - 1; i++) {
         for(int j = 1; j < cellCount - 1; j++) {
             //println(i);
             //println(j);
@@ -92,6 +100,14 @@ void draw() {
             }
         }
     }
+    }*/
+    
+    for(int i = 1; i < cellCount + 1; i++) {
+        for(int j = 1; j < cellCount + 1; j++) {
+            //println(i);
+            //println(j);
+            cells[i][j].update();
+        }
     }
     
     for(int i = 0; i < cellCount; i++) {
