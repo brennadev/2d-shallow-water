@@ -23,7 +23,8 @@ class WaterCell {
     void updateHalfStep(float dt) {
         // I'm guessing this is what needs to be done since it's an average - but there are 2 heights to average from
         // the only change that might be needed is the average of the 2 next cells might need to be averaged separately and then averaged with the current cell height
-        midpointHeight = (height + nextCellHorizontal.height + nextCellVertical.height) / 3;
+        //midpointHeight = (height + nextCellHorizontal.height + nextCellVertical.height) / 3;
+        midpointHeight = (height + ((nextCellHorizontal.height + nextCellVertical.height) / 2)) / 2;
         midpointHeight += -(dt / 2) * ((momentum.x - nextCellHorizontal.momentum.x) / dx) * ((momentum.y - nextCellVertical.momentum.y) / dy);
         
         midpointMomentum.x = (momentum.x + nextCellHorizontal.momentum.x) / 2 - (dt / 2) * (pow(nextCellHorizontal.momentum.x, 2) / nextCellHorizontal.height + .5
@@ -39,6 +40,10 @@ class WaterCell {
         
         // TODO: not sure if the next cell piece is correct for each - I'm assuming so as this is the most logical thing
         height -= dt * ((midpointMomentum.x - previousCellHorizontal.midpointMomentum.x) / dx + (midpointMomentum.y - previousCellHorizontal.midpointMomentum.y) / dy);
+        
+        if (height < 0) {
+            height = 0;
+        }
         momentum.x -= dt * (pow(midpointMomentum.x, 2) / height + .5 * 9.8 * pow(midpointHeight, 2) - pow(previousCellHorizontal.midpointMomentum.x, 2) 
         / previousCellHorizontal.height - .5 * 9.8 * pow(previousCellHorizontal.height, 2)) / dx;
         momentum.y -= dt * (pow(midpointMomentum.y, 2) / height + .5 * 9.8 * pow(midpointHeight, 2) - pow(previousCellVertical.midpointMomentum.y, 2)
