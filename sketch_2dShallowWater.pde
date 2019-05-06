@@ -11,8 +11,11 @@ WaterCell[][] cells = new WaterCell[cellCount + 2][cellCount + 2];
 
 color test = color(0);
 
+PImage image; 
+
 void setup() {
     size(400, 400, P2D);
+    image = loadImage("testLarge.png");
     noStroke();
     
     // set up a default WaterCell for each cell
