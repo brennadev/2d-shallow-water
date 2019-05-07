@@ -92,7 +92,6 @@ void setup() {
 
 
 void draw() {
-    fill(0, 220, 255);
     
     loadPixels();
     image.loadPixels();
@@ -110,34 +109,7 @@ void draw() {
     }
     
     updatePixels();
-    
-    /*for(int k = 0; k < 60; k++) {
-    //println("halfstep");
-    for(int i = 0; i < cellCount - 1; i++) {
-        for(int j = 0; j < cellCount - 1; j++) {
-            //println(i);
-            //println(j);
-            //println();
-            
-            cells[i][j].updateHalfStep(.002);
-        }
-    }*/
-    
-    //println("fullstep");
-    /*for(int i = 1; i < cellCount - 1; i++) {
-        for(int j = 1; j < cellCount - 1; j++) {
-            //println(i);
-            //println(j);
-            //println();
-            
-            cells[i][j].updateFullStep(.002);
-            
-            if (cells[i][j].height < 0) {
-                println("height < 0");
-            }
-        }
-    }
-    }*/
+
     
     for(int i = 1; i < cellCountHorizontal + 1; i++) {
         for(int j = 1; j < cellCountVertical + 1; j++) {
