@@ -143,10 +143,7 @@ void draw() {
             cells[i][j].averageColor = colorTotal / 9;
             
             // TODO: may not want to include the edge cells in the calculation of the color as that'll make the edges get really dark since that color is black 
-            /*if (red(colorTotal) > 255) {
-                println("red greater than 255");
-            }*/
-            
+
             cells[i][j].totalAdjacentHeight = cells[i - 1][j].height + cells[i + 1][j].height + cells[i][j - 1].height + cells[i][j + 1].height;
         }
     }
@@ -183,7 +180,9 @@ void draw() {
                                                                 topGreen + bottomGreen + leftGreen + rightGreen,
                                                                 topBlue + bottomBlue + leftBlue + rightBlue);
                                                                 
+                color interpolated = lerpColor(cells[i][j].adjacentCellsColorWeightedAverage, cells[i][j].averageColor, 0.5);
                 
+                cells[i][j].averageColor = interpolated;
             }
         }
     
@@ -196,9 +195,15 @@ void draw() {
             float green = green(pixels[pixelLocation]);
             float blue = blue(pixels[pixelLocation]);
             
+            color cellColor = cells[i / 3 + 1][j / 3 + 1].averageColor;
+            
+            float cellColorRed = red(cellColor);
+            float cellColorGreen = green(cellColor);
+            float cellColorBlue = blue(cellColor);
             
             
-            pixels[pixelLocation] = color(red, green, blue);
+            
+            pixels[pixelLocation] = color(cellColorRed, cellColorGreen, cellColorBlue);
         }
     }
 
@@ -206,23 +211,16 @@ void draw() {
     
     
     
-    for(int i = 1; i < cellCountHorizontal + 1; i++) {
+    /*for(int i = 1; i < cellCountHorizontal + 1; i++) {
         for(int j = 1; j < cellCountVertical + 1; j++) {
         //rect(i * (dx / 5), maxHeight - (cells[i][j].height * 5), (dx / 5), cells[i][j].height * 5);
             //translate(i * (200 / dx), 0, j * (200 / dy));
             //box(dx, cells[i][j].height, dy);
-            
-            /*if (cells[i][j].height > 2.55) {
-                println(cells[i][j].height);
-            }*/
-            
-            /*if (cells[i][j].height < 0) {
-                println(cells[i][j].height);
-            }*/
+
             fill(cells[i][j].height * 100, 100);
-            rect((i - 1) * dx, (j - 1) * dy, dx, dy);
+            //rect((i - 1) * dx, (j - 1) * dy, dx, dy);
         }
-    }
+    }*/
     
     //println(cells[50][50].height);
 }
