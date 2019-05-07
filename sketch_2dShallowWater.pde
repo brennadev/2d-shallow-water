@@ -94,6 +94,23 @@ void setup() {
 void draw() {
     fill(0, 220, 255);
     
+    loadPixels();
+    image.loadPixels();
+    
+    for(int i = 0; i < image.width; i++) {
+        for(int j = 0; j < image.height; j++) {
+            int pixelLocation = i + j * width;
+            
+            float red = red(image.pixels[pixelLocation]);
+            float green = green(image.pixels[pixelLocation]);
+            float blue = blue(image.pixels[pixelLocation]);
+            
+            pixels[pixelLocation] = color(red, green, blue);
+        }
+    }
+    
+    updatePixels();
+    
     /*for(int k = 0; k < 60; k++) {
     //println("halfstep");
     for(int i = 0; i < cellCount - 1; i++) {
@@ -143,7 +160,7 @@ void draw() {
             /*if (cells[i][j].height < 0) {
                 println(cells[i][j].height);
             }*/
-            fill(cells[i][j].height * 100);
+            fill(cells[i][j].height * 100, 100);
             rect((i - 1) * dx, (j - 1) * dy, dx, dy);
         }
     }
