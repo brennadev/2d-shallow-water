@@ -93,6 +93,8 @@ void setup() {
 
 void draw() {
     
+    
+    // I think the actual image stuff can go in setup since then after that, I don't want to be working off the original image
     loadPixels();
     image.loadPixels();
     
@@ -108,9 +110,7 @@ void draw() {
         }
     }
     
-    updatePixels();
-
-    
+    // update heights of cells
     for(int i = 1; i < cellCountHorizontal + 1; i++) {
         for(int j = 1; j < cellCountVertical + 1; j++) {
             //println(i);
@@ -118,6 +118,54 @@ void draw() {
             cells[i][j].update();
         }
     }
+    
+    // get total height around cell
+    for(int i = 1; i < cellCountHorizontal + 1; i++) {
+        for(int j = 1; j < cellCountVertical + 1; j++) {
+            //color colorTotal = color(0, 0, 0);
+            
+            float redTotal = 0;
+            float greenTotal = 0;
+            float blueTotal = 0;
+            
+            for(int k = 0; k < 3; k++) {
+                for(int l = 0; l < 3; l++) {
+                    int pixel = pixels[(i - 1) * 3 + k +((j - 1) * 3 + l) * width];
+                    redTotal += red(pixel);
+                    greenTotal += green(pixel);
+                    blueTotal += blue(pixel);
+                    //colorTotal += color(red(pixel), green(pixel), blue(pixel));
+                    //println(red(colorTotal));
+                }
+            }
+            
+            color colorTotal = color(redTotal, greenTotal, blueTotal);
+            color cellAverageColor = colorTotal / 9;
+            /*if (red(colorTotal) > 255) {
+                println("red greater than 255");
+            }*/
+            
+            cells[i][j].totalAdjacentHeight = cells[i - 1][j].height + cells[i + 1][j].height + cells[i][j - 1].height + cells[i][j + 1].height;
+        }
+    }
+    
+    for(int i = 0; i < width; i++) {
+        for(int j = 0; j < height; j++) {
+            int pixelLocation = i + j * width;
+            
+            float red = red(pixels[pixelLocation]);
+            float green = green(pixels[pixelLocation]);
+            float blue = blue(pixels[pixelLocation]);
+            
+            
+            
+            pixels[pixelLocation] = color(red, green, blue);
+        }
+    }
+
+    updatePixels();
+    
+    
     
     for(int i = 1; i < cellCountHorizontal + 1; i++) {
         for(int j = 1; j < cellCountVertical + 1; j++) {

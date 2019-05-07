@@ -6,6 +6,8 @@ class WaterCell {
     int velocityXDirection;    // 1 if to the right, -1 if to the left, 0 if none
     int velocityYDirection;    // 1 if to the bottom, -1 if to the top, 0 if none
     
+    float totalAdjacentHeight;
+    
     PVector momentum;
     float midpointHeight;
     PVector midpointMomentum;
@@ -42,8 +44,8 @@ class WaterCell {
         velocity *= .99;
         height += velocity;
         
-        if (height > 10) {
-            height = 10;
+        if (height > 12.75) {
+            height = 12.75;
         }
         if (height < 0) {
             height = 0;
