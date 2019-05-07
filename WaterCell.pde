@@ -7,6 +7,8 @@ class WaterCell {
     int velocityYDirection;    // 1 if to the bottom, -1 if to the top, 0 if none
     
     float totalAdjacentHeight;
+    color averageColor = color(0);
+    color adjacentCellsColorWeightedAverage = color(0);
     
     PVector momentum;
     float midpointHeight;

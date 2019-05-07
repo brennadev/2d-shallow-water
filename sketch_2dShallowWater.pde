@@ -140,7 +140,9 @@ void draw() {
             }
             
             color colorTotal = color(redTotal, greenTotal, blueTotal);
-            color cellAverageColor = colorTotal / 9;
+            cells[i][j].averageColor = colorTotal / 9;
+            
+            // TODO: may not want to include the edge cells in the calculation of the color as that'll make the edges get really dark since that color is black 
             /*if (red(colorTotal) > 255) {
                 println("red greater than 255");
             }*/
@@ -148,6 +150,43 @@ void draw() {
             cells[i][j].totalAdjacentHeight = cells[i - 1][j].height + cells[i + 1][j].height + cells[i][j - 1].height + cells[i][j + 1].height;
         }
     }
+    
+        for(int i = 1; i < cellCountHorizontal + 1; i++) {
+            for(int j = 1; j < cellCountVertical + 1; j++) {
+                float topCellHeightPercentage = cells[i][j - 1].height / cells[i][j].totalAdjacentHeight;
+                float bottomCellHeightPercentage = cells[i][j + 1].height / cells[i][j].totalAdjacentHeight;
+                float leftCellHeightPercentage = cells[i - 1][j].height / cells[i][j].totalAdjacentHeight;
+                float rightCellHeightPercentage = cells[i + 1][j].height / cells[i][j].totalAdjacentHeight;
+                
+                color topColor = cells[i][j - 1].averageColor;
+                color bottomColor = cells[i][j + 1].averageColor;
+                color leftColor = cells[i - 1][j].averageColor;
+                color rightColor = cells[i + 1][j].averageColor;
+                
+                float topRed = red(topColor) * topCellHeightPercentage;
+                float topGreen = green(topColor) * topCellHeightPercentage;
+                float topBlue = blue(topColor) * topCellHeightPercentage;
+                
+                float bottomRed = red(bottomColor) * bottomCellHeightPercentage;
+                float bottomGreen = green(bottomColor) * bottomCellHeightPercentage;
+                float bottomBlue = blue(bottomColor) * bottomCellHeightPercentage;
+                
+                float leftRed = red(leftColor) * leftCellHeightPercentage;
+                float leftGreen = green(leftColor) * leftCellHeightPercentage;
+                float leftBlue = blue(leftColor) * leftCellHeightPercentage;
+                
+                float rightRed = red(rightColor) * rightCellHeightPercentage;
+                float rightGreen = green(rightColor) * rightCellHeightPercentage;
+                float rightBlue = blue(rightColor) * rightCellHeightPercentage;
+                
+                cells[i][j].adjacentCellsColorWeightedAverage = color(topRed + bottomRed + leftRed + rightRed,
+                                                                topGreen + bottomGreen + leftGreen + rightGreen,
+                                                                topBlue + bottomBlue + leftBlue + rightBlue);
+                                                                
+                
+            }
+        }
+    
     
     for(int i = 0; i < width; i++) {
         for(int j = 0; j < height; j++) {
