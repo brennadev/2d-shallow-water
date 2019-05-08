@@ -82,12 +82,12 @@ void setup() {
             cells[i][j].height = .6;
         }
     }*/
-    cells[100][100].height = .55;
-    cells[50][150].height = .55;
-    cells[24][40].height = .55;
-    cells[15][10].height = .55;
+    cells[100][100].height = .6;
+    cells[50][150].height = .7;
+    cells[24][40].height = .7;
+    cells[15][10].height = .8;
     //cells[175][50].height = .55;
-    cells[25][125].height = .55;
+    cells[25][125].height = .8;
 }
 
 
@@ -122,7 +122,6 @@ void draw() {
     // get total height around cell
     for(int i = 1; i < cellCountHorizontal + 1; i++) {
         for(int j = 1; j < cellCountVertical + 1; j++) {
-            //color colorTotal = color(0, 0, 0);
             
             float redTotal = 0;
             float greenTotal = 0;
@@ -134,8 +133,6 @@ void draw() {
                     redTotal += red(pixel);
                     greenTotal += green(pixel);
                     blueTotal += blue(pixel);
-                    //colorTotal += color(red(pixel), green(pixel), blue(pixel));
-                    //println(red(colorTotal));
                 }
             }
             
@@ -176,9 +173,27 @@ void draw() {
                 float rightGreen = green(rightColor) * rightCellHeightPercentage;
                 float rightBlue = blue(rightColor) * rightCellHeightPercentage;
                 
-                cells[i][j].adjacentCellsColorWeightedAverage = color(topRed + bottomRed + leftRed + rightRed,
-                                                                topGreen + bottomGreen + leftGreen + rightGreen,
-                                                                topBlue + bottomBlue + leftBlue + rightBlue);
+                if (i == 1 && j == 1) {
+                    cells[i][j].adjacentCellsColorWeightedAverage = color(bottomRed + rightRed,
+                                                                          bottomGreen + rightGreen,
+                                                                          bottomBlue + rightBlue);
+                } else if (i == 1 && j == cellCountVertical) {
+                    cells[i][j].adjacentCellsColorWeightedAverage = color(topRed + rightRed,
+                                                                          topGreen + rightGreen,
+                                                                          topBlue + rightBlue);
+                } else if (i == cellCountHorizontal && j == 1) {
+                    cells[i][j].adjacentCellsColorWeightedAverage = color(bottomRed + leftRed,
+                                                                          bottomGreen + leftGreen,
+                                                                          bottomBlue + leftBlue);
+                } else if (i == cellCountHorizontal && j == cellCountVertical) {
+                    cells[i][j].adjacentCellsColorWeightedAverage = color(topRed + bottomRed + leftRed + rightRed,
+                                                                          topGreen + bottomGreen + leftGreen + rightGreen,
+                                                                          topBlue + bottomBlue + leftBlue + rightBlue);
+                } else {
+                    cells[i][j].adjacentCellsColorWeightedAverage = color(topRed + leftRed,
+                                                                          topGreen + leftGreen,
+                                                                          topBlue + leftBlue);
+                }
                                                                 
                 color interpolated = lerpColor(cells[i][j].adjacentCellsColorWeightedAverage, cells[i][j].averageColor, 0.5);
                 
