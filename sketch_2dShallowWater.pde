@@ -144,16 +144,16 @@ void draw() {
             
             // TODO: may not want to include the edge cells in the calculation of the color as that'll make the edges get really dark since that color is black 
 
-            cells[i][j].totalAdjacentHeight = cells[i - 1][j].height + cells[i + 1][j].height + cells[i][j - 1].height + cells[i][j + 1].height;
+            cells[i][j].totalAdjacentHeight = cells[i - 1][j].heightDifference + cells[i + 1][j].heightDifference + cells[i][j - 1].heightDifference + cells[i][j + 1].heightDifference;
         }
     }
     
         for(int i = 1; i < cellCountHorizontal + 1; i++) {
             for(int j = 1; j < cellCountVertical + 1; j++) {
-                float topCellHeightPercentage = cells[i][j - 1].height / cells[i][j].totalAdjacentHeight;
-                float bottomCellHeightPercentage = cells[i][j + 1].height / cells[i][j].totalAdjacentHeight;
-                float leftCellHeightPercentage = cells[i - 1][j].height / cells[i][j].totalAdjacentHeight;
-                float rightCellHeightPercentage = cells[i + 1][j].height / cells[i][j].totalAdjacentHeight;
+                float topCellHeightPercentage = cells[i][j - 1].heightDifference / cells[i][j].totalAdjacentHeight;
+                float bottomCellHeightPercentage = cells[i][j + 1].heightDifference / cells[i][j].totalAdjacentHeight;
+                float leftCellHeightPercentage = cells[i - 1][j].heightDifference / cells[i][j].totalAdjacentHeight;
+                float rightCellHeightPercentage = cells[i + 1][j].heightDifference / cells[i][j].totalAdjacentHeight;
                 
                 color topColor = cells[i][j - 1].averageColor;
                 color bottomColor = cells[i][j + 1].averageColor;

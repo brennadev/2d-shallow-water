@@ -7,6 +7,7 @@ class WaterCell {
     int velocityYDirection;    // 1 if to the bottom, -1 if to the top, 0 if none
     
     float totalAdjacentHeight;
+    float heightDifference = 0;
     color averageColor = color(0);
     color adjacentCellsColorWeightedAverage = color(0);
     
@@ -38,6 +39,7 @@ class WaterCell {
     }
     
     void update() {
+        float currentHeight = height;
         /*println(previousCellHorizontal.height);    // null when j = 200
         println(previousCellVertical.height);        // not null when j = 200
         println(nextCellHorizontal.height);            // not null when j = 200
@@ -52,6 +54,8 @@ class WaterCell {
         if (height < 0) {
             height = 0;
         }
+        
+        heightDifference = height - currentHeight;
     }
     
     void updateHalfStep(float dt) {
