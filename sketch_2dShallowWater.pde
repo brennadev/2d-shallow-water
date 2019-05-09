@@ -88,13 +88,7 @@ void setup() {
     cells[15][10].height = .8;
     //cells[175][50].height = .55;
     cells[25][125].height = .8;
-}
-
-
-void draw() {
     
-    
-    // I think the actual image stuff can go in setup since then after that, I don't want to be working off the original image
     loadPixels();
     image.loadPixels();
     
@@ -109,6 +103,16 @@ void draw() {
             pixels[pixelLocation] = color(red, green, blue);
         }
     }
+    updatePixels();
+}
+
+
+void draw() {
+    
+    
+    // I think the actual image stuff can go in setup since then after that, I don't want to be working off the original image
+    loadPixels();
+    
     
     // update heights of cells
     for(int i = 1; i < cellCountHorizontal + 1; i++) {
@@ -136,8 +140,12 @@ void draw() {
                 }
             }
             
+            
+            redTotal /= 9;
+            greenTotal /= 9;
+            blueTotal /= 9;
             color colorTotal = color(redTotal, greenTotal, blueTotal);
-            cells[i][j].averageColor = colorTotal / 9;
+            cells[i][j].averageColor = colorTotal;
             
             // TODO: may not want to include the edge cells in the calculation of the color as that'll make the edges get really dark since that color is black 
 
