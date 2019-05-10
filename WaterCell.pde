@@ -44,7 +44,7 @@ class WaterCell {
         println(previousCellVertical.height);        // not null when j = 200
         println(nextCellHorizontal.height);            // not null when j = 200
         println(nextCellVertical.height);            // not null when j = 200*/
-        velocity += ((previousCellHorizontal.height + previousCellVertical.height + nextCellHorizontal.height + nextCellVertical.height) / 4 - height) / 2;
+        velocity += ((previousCellHorizontal.height + previousCellVertical.height + nextCellHorizontal.height + nextCellVertical.height) / 4 - height) * 3;
         velocity *= .2;
         height += velocity;
         

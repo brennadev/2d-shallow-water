@@ -22,7 +22,7 @@ void setup() {
     // set up a default WaterCell for each cell
     for (int i = 1; i < cellCountHorizontal + 1; i++) {
         for (int j = 1; j < cellCountVertical + 1; j++) {
-            cells[i][j] = new WaterCell(0.001, 0);
+            cells[i][j] = new WaterCell(30, 0);
             //cells[i][j] = new WaterCell(0, 0);
         }
     }
@@ -35,12 +35,12 @@ void setup() {
      cells[i][cellCount + 1] = new WaterCell(0, 0);    // rightmost column
      }*/
 
-    for (int i = 0; i < cellCountHorizontal + 1; i++) {
+    for (int i = 0; i < cellCountHorizontal + 2; i++) {
         cells[i][0] = new WaterCell(0, 0);                       
         cells[i][cellCountVertical + 1] = new WaterCell(0, 0);
     }
 
-    for (int j = 0; j < cellCountVertical + 1; j++) {
+    for (int j = 0; j < cellCountVertical + 2; j++) {
         cells[0][j] = new WaterCell(0, 0);
         cells[cellCountHorizontal + 1][j] = new WaterCell(0, 0);
     }
@@ -76,8 +76,22 @@ void setup() {
      }
      }*/
      
-     //cells[50][50].height = 0.001;
-     //cells[66][93].height = 0.001;
+     cells[50][50].height = 0.003;
+     cells[66][93].height = 0.002;
+     cells[100][20].height = 0.002;
+     cells[25][120].height = 0.003;
+     cells[15][15].height = 0.002;
+     cells[60][30].height = 0.002;
+     cells[30][45].height = 0.002;
+     cells[90][75].height = 0.002;
+     cells[105][30].height = 0.002;
+     cells[60][120].height = 0.002;
+     cells[120][150].height = 0.002;
+     cells[105][175].height = 0.002;
+     cells[20][60].height = 0.002;
+     cells[50][20].height = 0.002;
+     cells[70][100].height = 0.002;
+     cells[0][0].height = 0.002;
      
 
     //cells[50][50].height = 0.6;
@@ -210,7 +224,15 @@ void draw() {
 
             // TODO: may not want to include the edge cells in the calculation of the color as that'll make the edges get really dark since that color is black 
 
-            cells[i][j].totalAdjacentHeight = cells[i - 1][j].heightDifference + cells[i + 1][j].heightDifference + cells[i][j - 1].heightDifference + cells[i][j + 1].heightDifference;
+            if (cells[i + 1][j + 1] == null) {
+                println("bottom right null");
+            }
+
+            cells[i][j].totalAdjacentHeight = cells[i - 1][j].heightDifference + cells[i + 1][j].heightDifference + 
+                                              cells[i][j - 1].heightDifference + cells[i][j + 1].heightDifference +
+                                              cells[i - 1][j - 1].heightDifference + cells[i + 1][j + 1].heightDifference +
+                                              cells[i - 1][j + 1].heightDifference + cells[i + 1][j - 1].heightDifference;
+                                              
         }
     }
 
@@ -220,6 +242,10 @@ void draw() {
             float bottomCellHeightPercentage = cells[i][j + 1].heightDifference / cells[i][j].totalAdjacentHeight;
             float leftCellHeightPercentage = cells[i - 1][j].heightDifference / cells[i][j].totalAdjacentHeight;
             float rightCellHeightPercentage = cells[i + 1][j].heightDifference / cells[i][j].totalAdjacentHeight;
+            float topLeftCellHeightPercentage = cells[i - 1][j - 1].heightDifference / cells[i][j].totalAdjacentHeight;
+            float bottomLeftCellHeightPercentage = cells[i - 1][j + 1].heightDifference / cells[i][j].totalAdjacentHeight;
+            float topRightCellHeightPercentage = cells[i + 1][j - 1].heightDifference / cells[i][j].totalAdjacentHeight;
+            float bottomRightCellHeightPercentage = cells[i + 1][j + 1].heightDifference / cells[i][j].totalAdjacentHeight;
 
             if (cells[i][j].totalAdjacentHeight == 0) {
                 continue;
@@ -237,6 +263,10 @@ void draw() {
             color bottomColor = cells[i][j + 1].averageColor;
             color leftColor = cells[i - 1][j].averageColor;
             color rightColor = cells[i + 1][j].averageColor;
+            color topLeftColor = cells[i - 1][j - 1].averageColor;
+            color bottomLeftColor = cells[i - 1][j + 1].averageColor;
+            color topRightColor = cells[i + 1][j - 1].averageColor;
+            color bottomRightColor = cells[i + 1][j + 1].averageColor;
 
             float topRed = red(topColor) * topCellHeightPercentage;
             float topGreen = green(topColor) * topCellHeightPercentage;
@@ -253,55 +283,87 @@ void draw() {
             float rightRed = red(rightColor) * rightCellHeightPercentage;
             float rightGreen = green(rightColor) * rightCellHeightPercentage;
             float rightBlue = blue(rightColor) * rightCellHeightPercentage;
+            
+            float topLeftRed = red(topLeftColor) * topLeftCellHeightPercentage;
+            float topLeftGreen = green(topLeftColor) * topLeftCellHeightPercentage;
+            float topLeftBlue = blue(topLeftColor) * topLeftCellHeightPercentage;
+            
+            float bottomLeftRed = red(bottomLeftColor) * bottomLeftCellHeightPercentage;
+            float bottomLeftGreen = green(bottomLeftColor) * bottomLeftCellHeightPercentage;
+            float bottomLeftBlue = blue(bottomLeftColor) * bottomLeftCellHeightPercentage;
+            
+            float topRightRed = red(topRightColor) * topRightCellHeightPercentage;
+            float topRightGreen = green(topRightColor) * topRightCellHeightPercentage;
+            float topRightBlue = blue(topRightColor) * topRightCellHeightPercentage;
+            
+            float bottomRightRed = red(bottomRightColor) * bottomRightCellHeightPercentage;
+            float bottomRightGreen = green(bottomRightColor) * bottomRightCellHeightPercentage;
+            float bottomRightBlue = blue(bottomRightColor) * bottomRightCellHeightPercentage;
 
+            // top left
             if (i == 1 && j == 1) {
-                cells[i][j].adjacentCellsColorWeightedAverage = color(bottomRed + rightRed, 
-                    bottomGreen + rightGreen, 
-                    bottomBlue + rightBlue);
+                cells[i][j].adjacentCellsColorWeightedAverage = color(bottomRed + rightRed + bottomRightRed, 
+                                                                      bottomGreen + rightGreen + bottomRightGreen, 
+                                                                      bottomBlue + rightBlue + bottomRightBlue);
                 if (bottomRed == 0 && bottomGreen == 0 && bottomBlue == 0 || rightRed == 0 && rightGreen == 0 && rightBlue == 0) {
                     println("0 values");
                 }
+            // bottom left
             } else if (i == 1 && j == cellCountVertical) {
-                cells[i][j].adjacentCellsColorWeightedAverage = color(topRed + rightRed, 
-                    topGreen + rightGreen, 
-                    topBlue + rightBlue);
+                cells[i][j].adjacentCellsColorWeightedAverage = color(topRed + rightRed + topRightRed, 
+                                                                      topGreen + rightGreen + topRightGreen, 
+                                                                      topBlue + rightBlue + topRightBlue);
                 if (topRed == 0 && topGreen == 0 && topBlue == 0 || rightRed == 0 && rightGreen == 0 && rightBlue == 0) {
                     println("0 values");
                 }
+            // top right  
             } else if (i == cellCountHorizontal && j == 1) {
-                cells[i][j].adjacentCellsColorWeightedAverage = color(bottomRed + leftRed, 
-                    bottomGreen + leftGreen, 
-                    bottomBlue + leftBlue);
+                cells[i][j].adjacentCellsColorWeightedAverage = color(bottomRed + leftRed + bottomLeftRed, 
+                                                                      bottomGreen + leftGreen + bottomLeftGreen, 
+                                                                      bottomBlue + leftBlue + bottomLeftBlue);
                 if (bottomRed == 0 && bottomGreen == 0 && bottomBlue == 0 || leftRed == 0 && leftGreen == 0 && leftBlue == 0) {
                     println("0 values");
                 }
+            // bottom right    
             } else if (i == cellCountHorizontal && j == cellCountVertical) {
 
-                cells[i][j].adjacentCellsColorWeightedAverage = color(topRed + leftRed, 
-                    topGreen + leftGreen, 
-                    topBlue + leftBlue);
+                cells[i][j].adjacentCellsColorWeightedAverage = color(topRed + leftRed + topLeftRed, 
+                                                                      topGreen + leftGreen + topLeftGreen, 
+                                                                      topBlue + leftBlue + topLeftBlue);
                 if (topRed == 0 && topGreen == 0 && topBlue == 0 || leftRed == 0 && leftGreen == 0 && leftBlue == 0) {
                     println("0 values");
                 }
+            // top row
+            } else if (i == 1) {
+                cells[i][j].adjacentCellsColorWeightedAverage = color(leftRed + rightRed + bottomRed + bottomLeftRed + bottomRightRed,
+                                                                      leftGreen + rightGreen + bottomGreen + bottomLeftGreen + bottomRightGreen,
+                                                                      leftBlue + rightBlue + bottomBlue + bottomLeftBlue + bottomRightBlue);
+            }
+            // bottom row
+            else if (i == cellCountHorizontal) {
+                cells[i][j].adjacentCellsColorWeightedAverage = color(leftRed + rightRed + topRed + topLeftRed + topRightRed,
+                                                                      leftGreen + rightGreen + topGreen + topLeftGreen + topRightGreen,
+                                                                      leftBlue + rightBlue + topRightBlue + topLeftBlue + topRightBlue);
+            }
+            
+            // left column
+            else if (j == 1) {
+                cells[i][j].adjacentCellsColorWeightedAverage = color(topRed + bottomRed + rightRed + topRightRed + bottomRightRed,
+                                                                      topGreen + bottomGreen + rightGreen + topRightGreen + bottomRightGreen,
+                                                                      topBlue + bottomBlue + rightBlue + topRightBlue + bottomRightBlue);
+            }
+            
+            // right column
+            else if (j == cellCountVertical) {
+                cells[i][j].adjacentCellsColorWeightedAverage = color(topRed + bottomRed + leftRed + topLeftRed + bottomLeftRed,
+                                                                      topGreen + bottomGreen + leftGreen + topLeftGreen + bottomLeftGreen,
+                                                                      topBlue + bottomBlue + leftBlue + topLeftBlue + bottomLeftBlue);
+            // everything in the middle
             } else {
-                cells[i][j].adjacentCellsColorWeightedAverage = color(topRed + bottomRed + leftRed + rightRed, 
-                    topGreen + bottomGreen + leftGreen + rightGreen, 
-                    topBlue + bottomBlue + leftBlue + rightBlue);
-                /*if (topRed == 0 && topGreen == 0 && topBlue == 0) {
-                 println("top 0");
-                 }
-                 
-                 if (leftRed == 0 && leftGreen == 0 && leftBlue == 0) {
-                 println("left 0");
-                 }*/
+                cells[i][j].adjacentCellsColorWeightedAverage = color(topRed + bottomRed + leftRed + rightRed + topLeftRed + topRightRed + bottomLeftRed + bottomRightRed, 
+                    topGreen + bottomGreen + leftGreen + rightGreen + topLeftGreen + topRightGreen + bottomLeftGreen + bottomRightGreen, 
+                    topBlue + bottomBlue + leftBlue + rightBlue + topLeftBlue + topRightBlue + bottomLeftBlue + bottomRightBlue);
 
-                /*if (bottomRed == 0 && bottomGreen == 0 && bottomBlue == 0) {
-                 println("bottom 0");
-                 }
-                 
-                 if (rightRed == 0 && rightGreen == 0 && rightBlue == 0) {
-                 println("right 0");
-                 }*/
 
                 if (topRed == 0 && topGreen == 0 && topBlue == 0 || leftRed == 0 && leftGreen == 0 && leftBlue == 0
                     || bottomRed == 0 && bottomGreen == 0 && bottomBlue == 0 || rightRed == 0 && rightGreen == 0 && rightBlue == 0) {
