@@ -61,12 +61,6 @@ void setup() {
         }
     }
 
-    /*for(int i = 20; i < 50; i++) {
-     for(int j = 25; j < 60; j++) {
-     cells[i][j].height = 0.002;
-     }
-     }*/
-     
      // make the heights of some cells much less than the rest; these vales are just what worked well
      cells[50][50].height = 0.003;
      cells[66][93].height = 0.002;
@@ -95,72 +89,6 @@ void setup() {
      cells[100][20].height = 0.002;
      cells[75][500].height = 0.002;
      
-
-    //cells[50][50].height = 0.6;
-    /*cells[60][60].height = 0.7;
-     cells[80][80].height = 0.8;
-     cells[81][81].height = 0.9;
-     cells[80][81].height = 0.8;
-     cells[81][80].height = 0.6;*/
-
-    /*for(int i = 100; i < 115; i++) {
-     for(int j = 140; j < 150; j++) {
-     //cells[i][j].height = 80 + (i / 1.5) + (j / 1.5);
-     cells[i][j].height = .6;
-     }
-     }*/
-    /*cells[100][100].height = .055;
-     cells[50][150].height = .055;
-     cells[24][40].height = .055;
-     cells[15][10].height = .055;*/
-    //cells[175][50].height = .55;
-    /*cells[25][125].height = .4;
-     cells[3][20].height = .35;
-     cells[100][50].height = .35;
-     cells[40][70].height = .4;
-     cells[41][70].height = .4;
-     cells[42][70].height = .4;
-     cells[101][50].height = .4;
-     cells[75][30].height = .5;*/
-
-    /*cells[4][20].height = .55;
-     cells[100][51].height = .55;
-     cells[40][71].height = .4;
-     cells[41][71].height = .55;
-     cells[42][71].height = .55;
-     cells[101][51].height = .4;
-     cells[75][31].height = .4;*/
-
-    /*cells[4][21].height = .8;
-     cells[100][52].height = .8;
-     cells[40][72].height = .8;
-     cells[41][72].height = .8;
-     cells[42][72].height = .8;
-     cells[101][52].height = .8;
-     cells[75][32].height = .8;*/
-
-    /* cells[5][20].height = .8;
-     cells[99][51].height = .8;
-     cells[43][71].height = .8;
-     cells[43][71].height = .8;
-     cells[43][71].height = .8;
-     cells[102][51].height = .8;
-     cells[76][31].height = .8;
-     
-     cells[42][21].height = .8;
-     cells[10][52].height = .8;
-     cells[48][72].height = .8;
-     cells[46][72].height = .8;
-     cells[49][72].height = .8;
-     cells[107][52].height = .8;
-     cells[79][32].height = .8;*/
-
-    /*cells[130][100].height = .8;
-     cells[120][80].height = .55;
-     cells[110][75].height = .8;
-     cells[80][100].height = .55;
-     cells[120][40].height = .55;*/
-
     loadPixels();
     image.loadPixels();
 
@@ -205,13 +133,10 @@ void updateWater() {
             
             cells[i][j].averageColor = pixels[(i - 1) + (j - 1) * width];
 
-
-
             cells[i][j].totalAdjacentHeight = cells[i - 1][j].heightDifference + cells[i + 1][j].heightDifference + 
                                               cells[i][j - 1].heightDifference + cells[i][j + 1].heightDifference +
                                               cells[i - 1][j - 1].heightDifference + cells[i + 1][j + 1].heightDifference +
-                                              cells[i - 1][j + 1].heightDifference + cells[i + 1][j - 1].heightDifference;
-                                              
+                                              cells[i - 1][j + 1].heightDifference + cells[i + 1][j - 1].heightDifference;     
         }
     }
 
