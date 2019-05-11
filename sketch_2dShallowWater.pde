@@ -5,9 +5,7 @@ final float dy = 3;
 
 final int cellCountHorizontal = 396;
 final int cellCountVertical = 558;
-//final int cellCountHorizontal = 132;
-//final int cellCountVertical = 186;
-final float maxHeight = 255;
+//final float maxHeight = 255;
 
 WaterCell[][] cells = new WaterCell[cellCountHorizontal + 2][cellCountVertical + 2]; 
 
@@ -66,7 +64,7 @@ void setup() {
 
     /*for(int i = 20; i < 50; i++) {
      for(int j = 25; j < 60; j++) {
-     cells[i][j].height = 0;
+     cells[i][j].height = 0.002;
      }
      }*/
      
@@ -224,16 +222,7 @@ void draw() {
             
             cells[i][j].averageColor = pixels[(i - 1) + (j - 1) * width];
 
-            // never is true
-            /*if (redTotal <= 0 && greenTotal <= 0 && blueTotal <= 0) {
-                println("small color totals");
-            }*/
 
-            // TODO: may not want to include the edge cells in the calculation of the color as that'll make the edges get really dark since that color is black 
-
-            if (cells[i + 1][j + 1] == null) {
-                println("bottom right null");
-            }
 
             cells[i][j].totalAdjacentHeight = cells[i - 1][j].heightDifference + cells[i + 1][j].heightDifference + 
                                               cells[i][j - 1].heightDifference + cells[i][j + 1].heightDifference +
