@@ -15,14 +15,13 @@ PImage image;
 
 void setup() {
     size(396, 558, P2D);
-    image = loadImage("testLarge.png");
+    image = loadImage("test4.png");
     noStroke();
 
     // set up a default WaterCell for each cell
     for (int i = 1; i < cellCountHorizontal + 1; i++) {
         for (int j = 1; j < cellCountVertical + 1; j++) {
             cells[i][j] = new WaterCell(30, 0);
-            //cells[i][j] = new WaterCell(0, 0);
         }
     }
 
@@ -68,6 +67,7 @@ void setup() {
      }
      }*/
      
+     // make the heights of some cells much less than the rest; these vales are just what worked well
      cells[50][50].height = 0.003;
      cells[66][93].height = 0.002;
      cells[100][20].height = 0.002;
@@ -180,7 +180,15 @@ void setup() {
 
 
 void draw() {
+    for(int i = 0; i < 6; i++) {
+        updateWater();
+    }
+}
 
+
+// make it easy to do multiple updates per frame
+void updateWater() {
+    
     loadPixels();
 
 
