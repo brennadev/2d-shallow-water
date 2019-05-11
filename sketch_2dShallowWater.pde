@@ -202,27 +202,6 @@ void updateWater() {
     // get total height around cell
     for (int i = 1; i < cellCountHorizontal + 1; i++) {
         for (int j = 1; j < cellCountVertical + 1; j++) {
-
-            /*float redTotal = 0;
-            float greenTotal = 0;
-            float blueTotal = 0;
-
-            for (int k = 0; k < 3; k++) {
-                for (int l = 0; l < 3; l++) {
-                    int pixel = pixels[(i - 1) * 3 + k +((j - 1) * 3 + l) * width];
-                    redTotal += red(pixel);
-                    greenTotal += green(pixel);
-                    blueTotal += blue(pixel);
-                }
-            }
-
-
-            redTotal /= 9;
-            greenTotal /= 9;
-            blueTotal /= 9;
-            color colorTotal = color(redTotal, greenTotal, blueTotal);
-            cells[i][j].averageColor = colorTotal;
-            */
             
             cells[i][j].averageColor = pixels[(i - 1) + (j - 1) * width];
 
