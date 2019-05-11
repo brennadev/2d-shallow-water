@@ -293,34 +293,26 @@ void draw() {
                 cells[i][j].adjacentCellsColorWeightedAverage = color(bottomRed + rightRed + bottomRightRed, 
                                                                       bottomGreen + rightGreen + bottomRightGreen, 
                                                                       bottomBlue + rightBlue + bottomRightBlue);
-                if (bottomRed == 0 && bottomGreen == 0 && bottomBlue == 0 || rightRed == 0 && rightGreen == 0 && rightBlue == 0) {
-                    println("0 values");
-                }
+
             // bottom left
             } else if (i == 1 && j == cellCountVertical) {
                 cells[i][j].adjacentCellsColorWeightedAverage = color(topRed + rightRed + topRightRed, 
                                                                       topGreen + rightGreen + topRightGreen, 
                                                                       topBlue + rightBlue + topRightBlue);
-                if (topRed == 0 && topGreen == 0 && topBlue == 0 || rightRed == 0 && rightGreen == 0 && rightBlue == 0) {
-                    println("0 values");
-                }
+
             // top right  
             } else if (i == cellCountHorizontal && j == 1) {
                 cells[i][j].adjacentCellsColorWeightedAverage = color(bottomRed + leftRed + bottomLeftRed, 
                                                                       bottomGreen + leftGreen + bottomLeftGreen, 
                                                                       bottomBlue + leftBlue + bottomLeftBlue);
-                if (bottomRed == 0 && bottomGreen == 0 && bottomBlue == 0 || leftRed == 0 && leftGreen == 0 && leftBlue == 0) {
-                    println("0 values");
-                }
+  
             // bottom right    
             } else if (i == cellCountHorizontal && j == cellCountVertical) {
 
                 cells[i][j].adjacentCellsColorWeightedAverage = color(topRed + leftRed + topLeftRed, 
                                                                       topGreen + leftGreen + topLeftGreen, 
                                                                       topBlue + leftBlue + topLeftBlue);
-                if (topRed == 0 && topGreen == 0 && topBlue == 0 || leftRed == 0 && leftGreen == 0 && leftBlue == 0) {
-                    println("0 values");
-                }
+
             // top row
             } else if (i == 1) {
                 cells[i][j].adjacentCellsColorWeightedAverage = color(leftRed + rightRed + bottomRed + bottomLeftRed + bottomRightRed,
@@ -353,7 +345,7 @@ void draw() {
                                                                       topBlue + bottomBlue + leftBlue + rightBlue + topLeftBlue + topRightBlue + bottomLeftBlue + bottomRightBlue);
             }
 
-            color interpolated = lerpColor(cells[i][j].adjacentCellsColorWeightedAverage, cells[i][j].averageColor, 0.8);
+            color interpolated = lerpColor(cells[i][j].adjacentCellsColorWeightedAverage, cells[i][j].averageColor, 0.85);
 
             cells[i][j].averageColor = interpolated;
         }
