@@ -3,10 +3,11 @@
 final float dx = 3;
 final float dy = 3;
 
-final int cellCountHorizontal = 132;
-final int cellCountVertical = 186;
+final int cellCountHorizontal = 396;
+final int cellCountVertical = 558;
+//final int cellCountHorizontal = 132;
+//final int cellCountVertical = 186;
 final float maxHeight = 255;
-final float gravity = 3;
 
 WaterCell[][] cells = new WaterCell[cellCountHorizontal + 2][cellCountVertical + 2]; 
 
@@ -197,7 +198,7 @@ void draw() {
     for (int i = 1; i < cellCountHorizontal + 1; i++) {
         for (int j = 1; j < cellCountVertical + 1; j++) {
 
-            float redTotal = 0;
+            /*float redTotal = 0;
             float greenTotal = 0;
             float blueTotal = 0;
 
@@ -216,11 +217,14 @@ void draw() {
             blueTotal /= 9;
             color colorTotal = color(redTotal, greenTotal, blueTotal);
             cells[i][j].averageColor = colorTotal;
+            */
+            
+            cells[i][j].averageColor = pixels[(i - 1) + (j - 1) * width];
 
             // never is true
-            if (redTotal <= 0 && greenTotal <= 0 && blueTotal <= 0) {
+            /*if (redTotal <= 0 && greenTotal <= 0 && blueTotal <= 0) {
                 println("small color totals");
-            }
+            }*/
 
             // TODO: may not want to include the edge cells in the calculation of the color as that'll make the edges get really dark since that color is black 
 
@@ -361,8 +365,8 @@ void draw() {
             // everything in the middle
             } else {
                 cells[i][j].adjacentCellsColorWeightedAverage = color(topRed + bottomRed + leftRed + rightRed + topLeftRed + topRightRed + bottomLeftRed + bottomRightRed, 
-                    topGreen + bottomGreen + leftGreen + rightGreen + topLeftGreen + topRightGreen + bottomLeftGreen + bottomRightGreen, 
-                    topBlue + bottomBlue + leftBlue + rightBlue + topLeftBlue + topRightBlue + bottomLeftBlue + bottomRightBlue);
+                                                                      topGreen + bottomGreen + leftGreen + rightGreen + topLeftGreen + topRightGreen + bottomLeftGreen + bottomRightGreen, 
+                                                                      topBlue + bottomBlue + leftBlue + rightBlue + topLeftBlue + topRightBlue + bottomLeftBlue + bottomRightBlue);
 
 
                 if (topRed == 0 && topGreen == 0 && topBlue == 0 || leftRed == 0 && leftGreen == 0 && leftBlue == 0
@@ -390,7 +394,9 @@ void draw() {
             float green = green(pixels[pixelLocation]);
             float blue = blue(pixels[pixelLocation]);
 
-            color cellColor = cells[i / 3 + 1][j / 3 + 1].averageColor;
+            
+            //color cellColor = cells[i / 3 + 1][j / 3 + 1].averageColor;
+            color cellColor = cells[i + 1][j + 1].averageColor;
 
             float cellColorRed = red(cellColor);
             float cellColorGreen = green(cellColor);
