@@ -93,6 +93,16 @@ void setup() {
      cells[50][20].height = 0.002;
      cells[70][100].height = 0.002;
      cells[0][0].height = 0.002;
+     cells[1][0].height = 0.002;
+     cells[350][200].height = 0.002;
+     cells[200][200].height = 0.002;
+     cells[100][375].height = 0.002;
+     cells[100][500].height = 0.002;
+     cells[200][150].height = 0.002;
+     cells[300][400].height = 0.002;
+     cells[0][500].height = 0.002;
+     cells[100][20].height = 0.002;
+     cells[75][500].height = 0.002;
      
 
     //cells[50][50].height = 0.6;
