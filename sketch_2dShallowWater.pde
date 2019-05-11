@@ -351,11 +351,8 @@ void draw() {
                 cells[i][j].adjacentCellsColorWeightedAverage = color(topRed + bottomRed + leftRed + rightRed + topLeftRed + topRightRed + bottomLeftRed + bottomRightRed, 
                                                                       topGreen + bottomGreen + leftGreen + rightGreen + topLeftGreen + topRightGreen + bottomLeftGreen + bottomRightGreen, 
                                                                       topBlue + bottomBlue + leftBlue + rightBlue + topLeftBlue + topRightBlue + bottomLeftBlue + bottomRightBlue);
-
-
             }
 
-            //println(red(cells[i][j].adjacentCellsColorWeightedAverage));
             color interpolated = lerpColor(cells[i][j].adjacentCellsColorWeightedAverage, cells[i][j].averageColor, 0.8);
 
             cells[i][j].averageColor = interpolated;
@@ -367,38 +364,15 @@ void draw() {
         for (int j = 0; j < height; j++) {
             int pixelLocation = i + j * width;
 
-            float red = red(pixels[pixelLocation]);
-            float green = green(pixels[pixelLocation]);
-            float blue = blue(pixels[pixelLocation]);
-
-            
-            //color cellColor = cells[i / 3 + 1][j / 3 + 1].averageColor;
             color cellColor = cells[i + 1][j + 1].averageColor;
 
             float cellColorRed = red(cellColor);
             float cellColorGreen = green(cellColor);
             float cellColorBlue = blue(cellColor);
 
-
-
             pixels[pixelLocation] = color(cellColorRed, cellColorGreen, cellColorBlue);
         }
     }
 
     updatePixels();
-
-
-
-    /*for(int i = 1; i < cellCountHorizontal + 1; i++) {
-     for(int j = 1; j < cellCountVertical + 1; j++) {
-     //rect(i * (dx / 5), maxHeight - (cells[i][j].height * 5), (dx / 5), cells[i][j].height * 5);
-     //translate(i * (200 / dx), 0, j * (200 / dy));
-     //box(dx, cells[i][j].height, dy);
-     
-     fill(cells[i][j].height * 100, 100);
-     //rect((i - 1) * dx, (j - 1) * dy, dx, dy);
-     }
-     }*/
-
-    //println(cells[50][50].height);
 }
