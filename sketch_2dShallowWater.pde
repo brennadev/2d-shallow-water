@@ -181,16 +181,12 @@ void setup() {
 
 void draw() {
 
-
-    // I think the actual image stuff can go in setup since then after that, I don't want to be working off the original image
     loadPixels();
 
 
     // update heights of cells
     for (int i = 1; i < cellCountHorizontal + 1; i++) {
         for (int j = 1; j < cellCountVertical + 1; j++) {
-            //println(i);
-            //println(j);
             cells[i][j].update();
         }
     }
@@ -234,6 +230,12 @@ void draw() {
 
     for (int i = 1; i < cellCountHorizontal + 1; i++) {
         for (int j = 1; j < cellCountVertical + 1; j++) {
+            
+            // prevent division by 0 (as the program will keep running even with division by 0)
+            if (cells[i][j].totalAdjacentHeight == 0) {
+                continue;
+            }
+            
             float topCellHeightPercentage = cells[i][j - 1].heightDifference / cells[i][j].totalAdjacentHeight;
             float bottomCellHeightPercentage = cells[i][j + 1].heightDifference / cells[i][j].totalAdjacentHeight;
             float leftCellHeightPercentage = cells[i - 1][j].heightDifference / cells[i][j].totalAdjacentHeight;
@@ -243,17 +245,6 @@ void draw() {
             float topRightCellHeightPercentage = cells[i + 1][j - 1].heightDifference / cells[i][j].totalAdjacentHeight;
             float bottomRightCellHeightPercentage = cells[i + 1][j + 1].heightDifference / cells[i][j].totalAdjacentHeight;
 
-            if (cells[i][j].totalAdjacentHeight == 0) {
-                continue;
-            }
-
-            // never true
-            /*if (topCellHeightPercentage + bottomCellHeightPercentage + leftCellHeightPercentage + rightCellHeightPercentage <= .95) {
-             println("height total too low");
-             }*/
-
-            // lots of NaN values
-            //println(topCellHeightPercentage + bottomCellHeightPercentage + leftCellHeightPercentage + rightCellHeightPercentage);
 
             color topColor = cells[i][j - 1].averageColor;
             color bottomColor = cells[i][j + 1].averageColor;
@@ -264,6 +255,7 @@ void draw() {
             color topRightColor = cells[i + 1][j - 1].averageColor;
             color bottomRightColor = cells[i + 1][j + 1].averageColor;
 
+            // multiply out the components
             float topRed = red(topColor) * topCellHeightPercentage;
             float topGreen = green(topColor) * topCellHeightPercentage;
             float topBlue = blue(topColor) * topCellHeightPercentage;
@@ -361,13 +353,6 @@ void draw() {
                                                                       topBlue + bottomBlue + leftBlue + rightBlue + topLeftBlue + topRightBlue + bottomLeftBlue + bottomRightBlue);
 
 
-                if (topRed == 0 && topGreen == 0 && topBlue == 0 || leftRed == 0 && leftGreen == 0 && leftBlue == 0
-                    || bottomRed == 0 && bottomGreen == 0 && bottomBlue == 0 || rightRed == 0 && rightGreen == 0 && rightBlue == 0) {
-                    //println("0 values");
-
-                    // most of the 0 values are coming from this
-                    //return;
-                }
             }
 
             //println(red(cells[i][j].adjacentCellsColorWeightedAverage));
