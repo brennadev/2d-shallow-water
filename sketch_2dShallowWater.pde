@@ -29,13 +29,6 @@ void setup() {
     }
 
     // the edge cells that always stay 0 for height
-    /*for(int i = 0; i < cellCountHorizontal + 1; i++) {
-     cells[i][0] = new WaterCell(0, 0);                // topmost row
-     cells[0][i] = new WaterCell(0, 0);                // leftmost column
-     cells[cellCount + 1][i] = new WaterCell(0, 0);    // bottommost row
-     cells[i][cellCount + 1] = new WaterCell(0, 0);    // rightmost column
-     }*/
-
     for (int i = 0; i < cellCountHorizontal + 2; i++) {
         cells[i][0] = new WaterCell(0, 0);                       
         cells[i][cellCountVertical + 1] = new WaterCell(0, 0);
@@ -389,7 +382,7 @@ void draw() {
             }
 
             //println(red(cells[i][j].adjacentCellsColorWeightedAverage));
-            color interpolated = lerpColor(cells[i][j].adjacentCellsColorWeightedAverage, cells[i][j].averageColor, 0.9);
+            color interpolated = lerpColor(cells[i][j].adjacentCellsColorWeightedAverage, cells[i][j].averageColor, 0.8);
 
             cells[i][j].averageColor = interpolated;
         }
