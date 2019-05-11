@@ -88,6 +88,25 @@ void setup() {
      cells[0][500].height = 0.002;
      cells[100][20].height = 0.002;
      cells[75][500].height = 0.002;
+     cells[110][50].height = 0.002;
+     cells[40][75].height = 0.002;
+     cells[390][500].height = 0.002;
+     cells[390][550].height = 0.002;
+     cells[300][420].height = 0.002;
+     cells[300][300].height = 0.002;
+     cells[350][400].height = 0.002;
+     cells[0][100].height = 0.002;
+     cells[0][50].height = 0.002;
+     cells[0][400].height = 0.002;
+     cells[0][250].height = 0.002;
+     cells[250][0].height = 0.002;
+     cells[300][0].height = 0.002;
+     cells[100][10].height = 0.002;
+     cells[200][10].height = 0.002;
+     cells[150][15].height = 0.002;
+     cells[200][20].height = 0.002;
+     cells[100][20].height = 0.002;
+     cells[300][50].height = 0.002;
      
     loadPixels();
     image.loadPixels();
@@ -108,7 +127,7 @@ void setup() {
 
 
 void draw() {
-    for(int i = 0; i < 6; i++) {
+    for(int i = 0; i < 4; i++) {
         updateWater();
     }
 }
