@@ -5,7 +5,6 @@ final float dy = 3;
 
 final int cellCountHorizontal = 396;
 final int cellCountVertical = 558;
-//final float maxHeight = 255;
 
 WaterCell[][] cells = new WaterCell[cellCountHorizontal + 2][cellCountVertical + 2]; 
 
@@ -15,7 +14,7 @@ PImage image;
 
 void setup() {
     size(396, 558, P2D);
-    image = loadImage("test4.png");
+    image = loadImage("testLarge.png");
     noStroke();
 
     // set up a default WaterCell for each cell
@@ -111,6 +110,7 @@ void setup() {
     loadPixels();
     image.loadPixels();
 
+    // load an initial version of the image
     for (int i = 0; i < image.width; i++) {
         for (int j = 0; j < image.height; j++) {
             int pixelLocation = i + j * width;
@@ -127,6 +127,7 @@ void setup() {
 
 
 void draw() {
+    // do multiple updates per frame so the animation happens faster - 4 was about the highest I could go without it dropping a ton of frames on my computer
     for(int i = 0; i < 4; i++) {
         updateWater();
     }
@@ -152,7 +153,7 @@ void updateWater() {
             
             cells[i][j].averageColor = pixels[(i - 1) + (j - 1) * width];
 
-            cells[i][j].totalAdjacentHeight = cells[i - 1][j].heightDifference + cells[i + 1][j].heightDifference + 
+            cells[i][j].totalAdjacentHeightDifference = cells[i - 1][j].heightDifference + cells[i + 1][j].heightDifference + 
                                               cells[i][j - 1].heightDifference + cells[i][j + 1].heightDifference +
                                               cells[i - 1][j - 1].heightDifference + cells[i + 1][j + 1].heightDifference +
                                               cells[i - 1][j + 1].heightDifference + cells[i + 1][j - 1].heightDifference;     
@@ -163,18 +164,18 @@ void updateWater() {
         for (int j = 1; j < cellCountVertical + 1; j++) {
             
             // prevent division by 0 (as the program will keep running even with division by 0)
-            if (cells[i][j].totalAdjacentHeight == 0) {
+            if (cells[i][j].totalAdjacentHeightDifference == 0) {
                 continue;
             }
             
-            float topCellHeightPercentage = cells[i][j - 1].heightDifference / cells[i][j].totalAdjacentHeight;
-            float bottomCellHeightPercentage = cells[i][j + 1].heightDifference / cells[i][j].totalAdjacentHeight;
-            float leftCellHeightPercentage = cells[i - 1][j].heightDifference / cells[i][j].totalAdjacentHeight;
-            float rightCellHeightPercentage = cells[i + 1][j].heightDifference / cells[i][j].totalAdjacentHeight;
-            float topLeftCellHeightPercentage = cells[i - 1][j - 1].heightDifference / cells[i][j].totalAdjacentHeight;
-            float bottomLeftCellHeightPercentage = cells[i - 1][j + 1].heightDifference / cells[i][j].totalAdjacentHeight;
-            float topRightCellHeightPercentage = cells[i + 1][j - 1].heightDifference / cells[i][j].totalAdjacentHeight;
-            float bottomRightCellHeightPercentage = cells[i + 1][j + 1].heightDifference / cells[i][j].totalAdjacentHeight;
+            float topCellHeightPercentage = cells[i][j - 1].heightDifference / cells[i][j].totalAdjacentHeightDifference;
+            float bottomCellHeightPercentage = cells[i][j + 1].heightDifference / cells[i][j].totalAdjacentHeightDifference;
+            float leftCellHeightPercentage = cells[i - 1][j].heightDifference / cells[i][j].totalAdjacentHeightDifference;
+            float rightCellHeightPercentage = cells[i + 1][j].heightDifference / cells[i][j].totalAdjacentHeightDifference;
+            float topLeftCellHeightPercentage = cells[i - 1][j - 1].heightDifference / cells[i][j].totalAdjacentHeightDifference;
+            float bottomLeftCellHeightPercentage = cells[i - 1][j + 1].heightDifference / cells[i][j].totalAdjacentHeightDifference;
+            float topRightCellHeightPercentage = cells[i + 1][j - 1].heightDifference / cells[i][j].totalAdjacentHeightDifference;
+            float bottomRightCellHeightPercentage = cells[i + 1][j + 1].heightDifference / cells[i][j].totalAdjacentHeightDifference;
 
 
             color topColor = cells[i][j - 1].averageColor;
@@ -186,7 +187,7 @@ void updateWater() {
             color topRightColor = cells[i + 1][j - 1].averageColor;
             color bottomRightColor = cells[i + 1][j + 1].averageColor;
 
-            // multiply out the components
+            // multiply out the components - is for a weighted average later
             float topRed = red(topColor) * topCellHeightPercentage;
             float topGreen = green(topColor) * topCellHeightPercentage;
             float topBlue = blue(topColor) * topCellHeightPercentage;
@@ -219,6 +220,7 @@ void updateWater() {
             float bottomRightGreen = green(bottomRightColor) * bottomRightCellHeightPercentage;
             float bottomRightBlue = blue(bottomRightColor) * bottomRightCellHeightPercentage;
 
+            // calculate the weighted average (any adjacent cells not added in will have a height of 0, so there's no reason to add them)
             // top left
             if (i == 1 && j == 1) {
                 cells[i][j].adjacentCellsColorWeightedAverage = color(bottomRed + rightRed + bottomRightRed, 
@@ -276,6 +278,7 @@ void updateWater() {
                                                                       topBlue + bottomBlue + leftBlue + rightBlue + topLeftBlue + topRightBlue + bottomLeftBlue + bottomRightBlue);
             }
 
+            // change the color!
             color interpolated = lerpColor(cells[i][j].adjacentCellsColorWeightedAverage, cells[i][j].averageColor, 0.85);
 
             cells[i][j].averageColor = interpolated;
@@ -283,6 +286,7 @@ void updateWater() {
     }
 
 
+    // get the actual pixels updated to use that color
     for (int i = 0; i < width; i++) {
         for (int j = 0; j < height; j++) {
             int pixelLocation = i + j * width;
