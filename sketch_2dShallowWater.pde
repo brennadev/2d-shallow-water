@@ -1,8 +1,5 @@
 // Copyright 2019 Brenna Olson. You may download this code for informational purposes only.
 
-final float dx = 3;
-final float dy = 3;
-
 final int cellCountHorizontal = 396;
 final int cellCountVertical = 558;
 
